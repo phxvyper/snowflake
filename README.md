@@ -6,6 +6,16 @@ Snowflake is a specification for a loosely defined unsigned integer with any wid
 
 For more details on what a snowflake is, see the [informal Snowflake standard.](https://github.com/phxvyper/snowflake/blob/master/STANDARD.md)
 
+### Example
+```py
+# 64-bit wide snowflake model with 1 extra segment for additional sorting power.
+                 milliseconds since custom epoch       worker   sequence
+|                                      143621749 |         26 |       37 |
+| ---------------------------------------------- | ---------- | -------- |
+| 0000000000000000001000100011110111111001110101 | 0000011010 | 00100101 |
+| 63                                          18 | 17       8 | 7      0 |
+```
+
 ## These Snowflakes
 
 In all of these implementations, Snowflakes are 64-bit unsigned integers that are guaranteed to be unique, as long as no more than
@@ -32,13 +42,3 @@ is approximately 2231.37824003 years.
 
 If will achieve maximum entropy per millisecond by using a round-robin distribution of workers with a maximum
 number of workers, resulting in an entropy of (2^18) per millisecond.
-
-
-## The Snowflake ID
-```
-                 milliseconds since custom epoch       worker   sequence
-|                                      143621749 |         26 |       37 |
-| ---------------------------------------------- | ---------- | -------- |
-| 0000000000000000001000100011110111111001110101 | 0000011010 | 00100101 |
-| 63                                          18 | 17       8 | 7      0 |
-```
