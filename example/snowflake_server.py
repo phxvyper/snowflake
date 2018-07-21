@@ -12,6 +12,8 @@ if os.name == "nt":
 else:
     snowflake_native = CDLL("./snowflake.so")
 
+snowflake_native.snowflake_init(workerid)
+
 
 def next_snowflake():
     snowflake = c_ulonglong()
