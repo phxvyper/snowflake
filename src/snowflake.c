@@ -1,7 +1,7 @@
 #include "shared.h"
 #include "snowflake.h"
 
-#define SNOWFLAKE_SEQUENCE_MAX (SNOWFLAKE_SEQUENCE_BITS * SNOWFLAKE_SEQUENCE_BITS) - 1
+#define SNOWFLAKE_SEQUENCE_MAX (2 << (SNOWFLAKE_SEQUENCE_BITS - 1)) - 1
 
 struct _snowflake_state
 {
@@ -11,6 +11,7 @@ struct _snowflake_state
     long int worker_id;
     // sequence of the last snowflake made
     long int sequence;
+    int first;
 } global_state;
 
 time_t timeb_milliseconds(struct timeb time)
@@ -47,11 +48,24 @@ int next_snowflake(uint64_t *snowflake)
     if (milliseconds != timeb_milliseconds(global_state.time))
     {
         global_state.sequence = 0;
+        global_state.first = 1;
     }
-    else if (global_state.sequence == SNOWFLAKE_SEQUENCE_MAX)
+    else
     {
-        // cannot create a UNIQUE snowflake, so we should fail.
-        return 1;
+        if (global_state.sequence == SNOWFLAKE_SEQUENCE_MAX)
+        {
+            // cannot create a UNIQUE snowflake, so we should fail.
+            return 1;
+        }
+
+        if (global_state.first)
+        {
+            global_state.first = 0;
+        }
+        else
+        {
+            global_state.sequence++;
+        }
     }
 
     global_state.time = time;
@@ -65,6 +79,7 @@ int snowflake_init(long int worker_id)
     ftime(&global_state.time);
     global_state.worker_id = worker_id;
     global_state.sequence = SNOWFLAKE_SEQUENCE_MAX;
+    global_state.first = 1;
 
     return 0;
 }
