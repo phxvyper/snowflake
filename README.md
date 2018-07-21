@@ -1,11 +1,18 @@
 # Snowflake
-Snowflakes are 64-bit unsigned integers that are guaranteed to be unique, as long as no more than
-(2^b)-1 snowflakes are generated in a millisecond. If a snowflake is attempted to be organized
+
+Snowflake is a specification for a loosely defined unsigned integer with any width greater than 1 bit, where:
+ - at least 1 bit represents the time since an epoch
+ - at least 1 bit represents the 0-indexed count of snowflakes that have been made since the last time the time value has changed
+
+## These Snowflakes
+
+In all of these implementations, Snowflakes are 64-bit unsigned integers that are guaranteed to be unique, as long as no more than
+256 snowflakes are generated in a millisecond. If a snowflake is attempted to be organized
 when this limit is reached, no snowflake will be generated.
 
-The uniqueness of the snowflake is dependent on the worker_id being unique to all other workers when passed in.
+The uniqueness of the snowflake is dependent on the worker_id being unique to all other workers when it is provided to the snowflake controller.
 
-## Building and Using
+## Using
 
 Please see the individual documentation for utilizing this specification's implementations in whatever language fits your needs.
 
