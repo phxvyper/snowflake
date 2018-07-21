@@ -44,6 +44,12 @@ extern "C"
 {
 #endif
 
+#if defined(_MSC_VER)
+#define SF_EXPORT __declspec(dllexport)
+#else
+#define SF_EXPORT
+#endif
+
 /**
  * @brief The program's epoch
  * 
@@ -67,14 +73,14 @@ extern "C"
      * @param[out] snowflake the snowflake that was created
      * @return int 0 if the snowflake was created
      */
-    int next_snowflake(uint64_t *snowflake);
+    SF_EXPORT int next_snowflake(uint64_t *snowflake);
     /**
      * @brief Initialize the snowflake state with a worker id.
      * 
      * @param worker_id The id associated with the worker that is generating snowflakes.
      * @return int 0 if the initialization is successful
      */
-    int snowflake_init(long int worker_id);
+    SF_EXPORT int snowflake_init(long int worker_id);
 
 #ifdef __cplusplus
 }
