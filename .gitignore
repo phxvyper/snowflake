@@ -1,4 +1,9 @@
+# build files
 bin/
 **/*/snowflake.so
 
+# python/flask caching files
+**/*/__pycache__/
+
+# environment/IDE/editor files
 .vscode/
