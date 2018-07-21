@@ -4,6 +4,8 @@ Snowflake is a specification for a loosely defined unsigned integer with any wid
  - at least 1 bit represents the time since an epoch
  - at least 1 bit represents the 0-indexed count of snowflakes that have been made since the last time the time value has changed
 
+For more details on what a snowflake is, see the [informal Snowflake standard.](https://github.com/phxvyper/snowflake/blob/master/STANDARD.md)
+
 ## These Snowflakes
 
 In all of these implementations, Snowflakes are 64-bit unsigned integers that are guaranteed to be unique, as long as no more than
@@ -14,7 +16,12 @@ The uniqueness of the snowflake is dependent on the worker_id being unique to al
 
 ## Using
 
-Please see the individual documentation for utilizing this specification's implementations in whatever language fits your needs.
+Please see the individual documentation for utilizing this specification's implementations in whatever language fits your needs:
+
+ - [C](https://github.com/phxvyper/snowflake/tree/master/Snowflake)
+ - [C#/.NET](https://github.com/phxvyper/snowflake/tree/master/Snowflake.NET)
+ - [Python 3.5+](https://github.com/phxvyper/snowflake/tree/master/SnowflakePy)
+ - More coming soon!
 
 ## Entropy
 If the default values are used, then...
