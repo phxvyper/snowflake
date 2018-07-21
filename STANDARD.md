@@ -33,7 +33,7 @@ The uniqueness of a snowflake only pertains to the system in which it is being u
 
 ### 3.1 Example
 
-```py
+```r
 # custom epoch is Jan 1st, 2014 at Midnight +0000 UTC
 # in a 64-bit wide Snowflake model, with an additional 'worker' segment:
                  milliseconds since custom epoch       worker   sequence
