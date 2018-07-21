@@ -1,1 +1,4 @@
-example/sonyflake_server
+bin/
+**/*/snowflake.so
+
+.vscode/
