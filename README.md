@@ -5,40 +5,9 @@ when this limit is reached, no snowflake will be generated.
 
 The uniqueness of the snowflake is dependent on the worker_id being unique to all other workers when passed in.
 
-## Building
+## Building and Using
 
-```sh
-$ ./build
-```
-
-## Usage
-
-```c
-#include "snowflake.h"
-#include <stdlib.h>
-
-int main(void)
-{
-    // example worker_id, should be unique in your implementation of 
-    // workers/servers that create snowflakes.
-    long int worker_id = 32;
-
-    // initialize the snowflake state
-    snowflake_init(worker_id);
-
-    // obtain a snowflake
-    uint64_t snowflake;
-    if (next_snowflake(&snowflake))
-    {
-        // if a truthy value is returned, there was an error
-        // and no snowflake is made.
-    }
-
-    printf("%lli", snowflake);
-
-    return 0;
-}
-```
+Please see the individual documentation for utilizing this specification's implementations in whatever language fits your needs.
 
 ## Entropy
 If the default values are used, then...
