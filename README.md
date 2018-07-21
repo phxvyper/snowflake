@@ -1,6 +1,6 @@
 # Snowflake
 Snowflakes are 64-bit unsigned integers that are guaranteed to be unique, as long as no more than
-\f$(2^b)-1\f$ snowflakes are generated in a millisecond. If a snowflake is attempted to be organized
+(2^b)-1 snowflakes are generated in a millisecond. If a snowflake is attempted to be organized
 when this limit is reached, no snowflake will be generated.
 
 The uniqueness of the snowflake is dependent on the worker_id being unique to all other workers when passed in.
