@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Tristen Horton</Authors>
+    <Company />
+    <Description>Library for generating unique identifiers based on Twitter's time and entropy based Snowflake model.</Description>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <Copyright>(c) 2018 Tristen Horton</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/phxvyper/snowflake</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/phxvyper/snowflake</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>SnowflakeID</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+</Project>
