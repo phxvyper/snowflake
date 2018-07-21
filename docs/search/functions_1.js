@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['snowflake_5finit',['snowflake_init',['../snowflake_8h.html#ab4cff63146a98c4c00be7c095c512274',1,'snowflake.h']]]
+  ['snowflake_5finit',['snowflake_init',['../snowflake_8h.html#af38907dd61093e9cd6c239d5f5c0cd93',1,'snowflake.h']]]
 ];
