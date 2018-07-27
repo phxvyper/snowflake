@@ -19,7 +19,7 @@ time_t timeb_milliseconds(struct timeb time)
     // convert seconds component of timeb to milliseconds
     // append milliseconds component of timbe to total ms
     // then convert into milliseconds.
-    return (time_t)(1000.0 * time.time + time.millitm);
+    return (time_t)(1000 * time.time + time.millitm);
 }
 
 uint64_t get_snowflake_id()
