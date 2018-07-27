@@ -34,19 +34,31 @@ void print_uint64_bits(uint64_t x)
     print_bits(&x, sizeof(x));
 }
 
+#define MAX_WORKERID (2 << (SNOWFLAKE_WORKERID_BITS - 1))
+#define SNOWFLAKE_SEQUENCE_MAX (2 << (SNOWFLAKE_SEQUENCE_BITS - 1))
+
 int main()
 {
-    uint64_t snowflake;
-    if (next_snowflake(&snowflake))
+    for (int wid = 0; wid < MAX_WORKERID; wid++)
     {
-        // error
-        printf("failure");
+        for (int sid = 0; sid < SNOWFLAKE_SEQUENCE_MAX; sid++)
+        {
+            uint64_t snowflake;
+            if (next_snowflake(wid, &snowflake))
+            {
+                // error
+                printf("%4i.%3i: failed\n", wid, sid);
+                return 1;
+            }
+            else
+            {
+                // good!
+                printf("%4i.%3i: %lli ", wid, sid, snowflake);
+                print_uint64_bits(snowflake);
+                printf("\n");
+            }
+        }
     }
-    else
-    {
-        // good!
-        printf("%lli: ", snowflake);
-        print_uint64_bits(snowflake);
-    }
+    
     return 0;
 }
