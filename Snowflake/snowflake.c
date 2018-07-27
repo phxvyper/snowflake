@@ -2,6 +2,7 @@
 #include "snowflake.h"
 
 #define SNOWFLAKE_SEQUENCE_MAX (2 << (SNOWFLAKE_SEQUENCE_BITS - 1)) - 1
+#define SNOWFLAKE_WORKER_MAX (2 << (SNOWFLAKE_WORKERID_BITS - 1)) - 1
 
 struct _snowflake_state
 {
@@ -12,7 +13,7 @@ struct _snowflake_state
     // sequence of the last snowflake made
     long int sequence;
     int first;
-} global_state;
+} states[SNOWFLAKE_WORKER_MAX];
 
 time_t timeb_milliseconds(struct timeb time)
 {
@@ -22,54 +23,56 @@ time_t timeb_milliseconds(struct timeb time)
     return (time_t)(1000 * time.time + time.millitm);
 }
 
-uint64_t get_snowflake_id()
+uint64_t get_snowflake_id(unsigned int worker_id)
 {
     uint64_t id = 0;
 
     // ensure we organize our snowflake to use our epoch, not the unix epoch.
-    time_t milliseconds = timeb_milliseconds(global_state.time) - SNOWFLAKE_EPOCH;
+    time_t milliseconds = timeb_milliseconds(states[worker_id].time) - SNOWFLAKE_EPOCH;
 
     id = milliseconds << SNOWFLAKE_WORKERID_BITS;
-    id = (id + global_state.worker_id) << SNOWFLAKE_SEQUENCE_BITS;
-    id = (id + global_state.sequence);
+    id = (id + worker_id) << SNOWFLAKE_SEQUENCE_BITS;
+    id = (id + states[worker_id].sequence);
 
     return id;
 }
 
-int next_snowflake(uint64_t *snowflake)
+int next_snowflake(unsigned int worker_id, uint64_t *snowflake)
 {
     struct timeb time;
     long int milliseconds;
+    struct _snowflake_state state = states[worker_id];
 
     ftime(&time);
     milliseconds = timeb_milliseconds(time);
 
     // reset sequence if we're on a new timestamp or we've hit the max sequence value
-    if (milliseconds != timeb_milliseconds(global_state.time))
+    if (milliseconds != timeb_milliseconds(state.time))
     {
-        global_state.sequence = 0;
-        global_state.first = 1;
+        state.sequence = 0;
+        state.first = 1;
     }
     else
     {
-        if (global_state.sequence == SNOWFLAKE_SEQUENCE_MAX)
+        if (state.sequence == SNOWFLAKE_SEQUENCE_MAX)
         {
             // cannot create a UNIQUE snowflake, so we should fail.
             return 1;
         }
 
-        if (global_state.first)
+        if (state.first)
         {
-            global_state.first = 0;
+            state.first = 0;
         }
         else
         {
-            global_state.sequence++;
+            state.sequence++;
         }
     }
 
-    global_state.time = time;
+    state.time = time;
+    states[worker_id] = state;
 
-    (*snowflake) = get_snowflake_id();
+    (*snowflake) = get_snowflake_id(worker_id);
     return 0;
 }
