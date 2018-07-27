@@ -73,14 +73,7 @@ extern "C"
      * @param[out] snowflake the snowflake that was created
      * @return int 0 if the snowflake was created
      */
-    SF_EXPORT int next_snowflake(uint64_t *snowflake);
-    /**
-     * @brief Initialize the snowflake state with a worker id.
-     * 
-     * @param worker_id The id associated with the worker that is generating snowflakes.
-     * @return int 0 if the initialization is successful
-     */
-    SF_EXPORT int snowflake_init(long int worker_id);
+    SF_EXPORT int next_snowflake(unsigned int worker_id, uint64_t *snowflake);
 
 #ifdef __cplusplus
 }

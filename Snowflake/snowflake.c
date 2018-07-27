@@ -73,13 +73,3 @@ int next_snowflake(uint64_t *snowflake)
     (*snowflake) = get_snowflake_id();
     return 0;
 }
-
-int snowflake_init(long int worker_id)
-{
-    ftime(&global_state.time);
-    global_state.worker_id = worker_id;
-    global_state.sequence = SNOWFLAKE_SEQUENCE_MAX;
-    global_state.first = 1;
-
-    return 0;
-}
