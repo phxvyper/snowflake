@@ -12,6 +12,9 @@
         (byte & 0x02 ? '1' : '0'), \
         (byte & 0x01 ? '1' : '0')
 
+#define MAX_WORKERID (2 << (SNOWFLAKE_WORKERID_BITS - 1))
+#define SNOWFLAKE_SEQUENCE_MAX (2 << (SNOWFLAKE_SEQUENCE_BITS - 1))
+
 time_t timeb_milliseconds_test(struct timeb time)
 {
     // convert seconds component of timeb to milliseconds
@@ -33,9 +36,6 @@ void print_uint64_bits(uint64_t x)
 {
     print_bits(&x, sizeof(x));
 }
-
-#define MAX_WORKERID (2 << (SNOWFLAKE_WORKERID_BITS - 1))
-#define SNOWFLAKE_SEQUENCE_MAX (2 << (SNOWFLAKE_SEQUENCE_BITS - 1))
 
 int main()
 {
