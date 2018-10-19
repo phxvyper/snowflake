@@ -26,7 +26,7 @@ A Snowflake is a number of any width greater than 1 bit, where:
  3. each evaluated segment is continuous such that a segment's determined value can only be obtained from a continuous section of bits that is not split into by another segment's bits.
 
 Additionally, the expected values within a Snowflake must exist in certain locations within the numeral's binary representation:
- 1. the time segment must end at the HEAD of the numeral.
+ 1. the sequence segment must end at the HEAD of the numeral.
  2. the time segment must begin at the TRUNK of the numeral.
 
 The uniqueness of a snowflake only pertains to the system in which it is being utilized in, and therefore should be unique to all other snowflakes in the same data system, but does not need to be unique with any snowflake from another data system it is not apart of.
