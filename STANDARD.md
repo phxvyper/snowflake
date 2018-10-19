@@ -47,6 +47,21 @@ where *HEAD* is at index 63 because it is the most signficant bit, and *TRUNK* i
 
 Note the additional, previously undefined, segment called 'worker'. This is permitted by this specification because this document only defines the *minimum* level of validity for a Snowflake.
 
+### 3.2 Comparing Snowflakes
+
+In comparisons between two Snowflakes of the same structure, there are some interesting implications:
+
+| comparison | notes |
+|  :------:  |  ---  |
+|  `a == b`  | The snowflakes were created at the same time and have the same sequence, implying equality. |
+|  `a > b`   | `a` could be newer than `b`. Inequality is implied. |
+
+The assumption that `a` is newer than `b` when `a > b` is only accurate in systems where the Snowflake structure has a consistently direct and unqiue correlation to the time of creation. The default structure for a snowflake only contains data for time and sequence, and the sequence bits still correlate uniquely to the time of creation as they increment over time.
+
+This assumption of `a` being newer than `b` when `a > b` continue to be *mostly true* in systems with high snowflake creation rates, but low rate of comparisons between snowflakes that are very near eachother.
+
+Snowflakes are useful for quickly sorting, but if a true sort is desired then the components of the Snowflake must be disassembled.
+
 ## 4. Epoch Times
 
 An epoch time is a system-specific offset from the Unix Epoch Time. Every implementation of Snowflake must have a single Epoch time, but that eopch time does not have to be constant and can be any offset from the Unix Epoch Time.
